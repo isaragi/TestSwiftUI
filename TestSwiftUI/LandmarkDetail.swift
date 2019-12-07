@@ -1,48 +1,47 @@
-//
-//  LandmarkDetail.swift
-//  TestSwiftUI
-//
-//  Created by isaragi on 2019/07/27.
-//  Copyright © 2019 isaragi. All rights reserved.
-//
+/*
+See LICENSE folder for this sample’s licensing information.
+
+Abstract:
+A view showing the details for a landmark.
+*/
 
 import SwiftUI
 
 struct LandmarkDetail: View {
+    var landmark: Landmark
+
     var body: some View {
         VStack {
-            MapView()
+            MapView(coordinate: landmark.locationCoordinate)
                 .edgesIgnoringSafeArea(.top)
                 .frame(height: 300)
-            
-            CircleImage()
-                .offset(y: -130)
+
+            CircleImage(image: landmark.image)
+                .offset(x: 0, y: -130)
                 .padding(.bottom, -130)
-            
+
             VStack(alignment: .leading) {
-                Text("Turtle Rock")
+                Text(landmark.name)
                     .font(.title)
-                    
-                HStack {
-                    Text("Joshua Tree National Park")
+
+                HStack(alignment: .top) {
+                    Text(landmark.park)
                         .font(.subheadline)
                     Spacer()
-                    Text("Califrnia")
+                    Text(landmark.state)
                         .font(.subheadline)
-                    
                 }
             }
             .padding()
-            
+
             Spacer()
         }
+        .navigationBarTitle(Text(verbatim: landmark.name), displayMode: .inline)
     }
 }
 
-#if DEBUG
-struct ContentView_Previews: PreviewProvider {
+struct LandmarkDetail_Previews: PreviewProvider {
     static var previews: some View {
-        LandmarkDetail()
+        LandmarkDetail(landmark: landmarkData[0])
     }
 }
-#endif
